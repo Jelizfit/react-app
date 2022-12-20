@@ -17,8 +17,8 @@ function Body() {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShowBar}>
-        Launch
+      <Button className="mb-4" variant="primary" onClick={handleShowBar}>
+        Search
       </Button>
       <SearchBar show={showBar} handleClose={handleCloseBar} />
       <Tabs

@@ -1,4 +1,5 @@
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import SearchForm from './SearchForm';
 
 function SearchBar({ show, handleClose }) {
   return (
@@ -7,8 +8,7 @@ function SearchBar({ show, handleClose }) {
         <Offcanvas.Title>Offcanvas</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
-        Some text as placeholder. In real life you can have the elements you
-        have chosen. Like, text, images, lists, etc.
+        <SearchForm />
       </Offcanvas.Body>
     </Offcanvas>
   )
