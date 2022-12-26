@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Button from 'react-bootstrap/Button';
-import Map from './Map';
-import TimeSelector from './TimeSelector';
 import './body.scss'
 import SearchBar from './SearchBar';
+import Forecast from './Tabs/Forecast';
+import Now from './Tabs/Now';
+
 
 
 
@@ -14,6 +15,7 @@ function Body() {
 
   const handleCloseBar = () => setShowBar(false);
   const handleShowBar = () => setShowBar(true);
+
 
   return (
     <>
@@ -28,12 +30,10 @@ function Body() {
         justify
       >
         <Tab eventKey="now" title="Now">
-          <TimeSelector id="now" />
-          <Map />
+          <Now  />
         </Tab>
         <Tab eventKey="forecast" title="Forecast">
-          <TimeSelector id="forecast" />
-          <Map />
+          <Forecast /> 
         </Tab>
       </Tabs>
     </>
