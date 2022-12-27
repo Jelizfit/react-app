@@ -1,12 +1,15 @@
+import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { getWeather, getForecast, defaultSearchParams } from "../services/apiService";
+import ErrorModal from "../ErrorModal";
 
 
 function ExportDataForm() {
 
-    const modes = ['json', 'html', 'xml'];
+const [errorMessage, setErrorMessage] = useState(null)
 
+    const modes = ['json', 'html', 'xml'];
     const endpoints = ['Current', 'Forecast'];
 
 
@@ -28,9 +31,19 @@ function ExportDataForm() {
             mode,
         })
             .then((response) => response.text())
-            .then((data) => window.open('about:blank').document.body.append(data));
+            .then((data) => {
+                const objectData = JSON.parse(data);
+                if (objectData.cod !== 200)
+                    throw Error(data.message);
+                window.open('about:blank').document.body.append(data)
+            })
+
+            .catch((error) => {
+                setErrorMessage(error.message)
+            });
     };
     return (
+        <>
         <Form onSubmit={handleSubmit} className="mt-4">
             <h5 className="mb-5">Export</h5>
             <Form.Group>
@@ -57,6 +70,8 @@ function ExportDataForm() {
                 Export
             </Button>
         </Form>
+        <ErrorModal message={errorMessage} handleClose={setErrorMessage(null)} />
+        </>
     );
 }
 
