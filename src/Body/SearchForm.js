@@ -19,12 +19,6 @@ function SearchForm() {
         { code: 'zh_cn', label: 'Chonese Simplified' },
     ];
 
-    // const ExportDataForm = [
-    //     'xml',
-    //     'html',
-    //     'json',
-    // ];
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(event);
@@ -73,11 +67,6 @@ function SearchForm() {
                     ))}
                 </Form.Select>
             </Form.Group>
-            {/* <Form.Group className="my-4">
-            <Form.Select name="data" defaultValue={defaultSearchParams.data}>
-                 
-            </Form.Select>
-            </Form.Group> */}
             <Button className="w-100" variant="primary" type="submit">
                 Submit
             </Button>
