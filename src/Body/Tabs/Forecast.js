@@ -1,24 +1,27 @@
 import TimeSelector from "./TimeSelector";
 import Map from "./Map";
 import { getForecast } from "../../services/apiService";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-function Forecast () {
+function Forecast() {
+  const [forecastData, setForecastData] = useState(null);
+
+  useEffect(() => {
+    (async function () {
+      const response = await getForecast();
+      const data = await response.json();
+      setForecastData(data);
+      // console.log('response', response)
+    })()
+  }, []);
+
+  return (
+    <>
     
-    useEffect(() => {
-        (async function () {
-          const weather = await getForecast();
-          const response = await weather.json();
-          console.log('response', response)
-        })()
-      }, []);
-
-    return(
-        <>
-         <TimeSelector id="forecast" />
-          <Map />
-        </>
-    );
+      <TimeSelector data={forecastData} />
+      <Map />
+    </>
+  );
 }
 
 export default Forecast;

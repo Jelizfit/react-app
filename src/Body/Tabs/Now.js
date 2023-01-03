@@ -1,21 +1,25 @@
 import { useState, useEffect } from "react";
-import TimeSelector from "./TimeSelector";
 import Map from "./Map";
 import { getWeather } from "../../services/apiService";
 import ErrorModal from "../../ErrorModal";
+import Data from "./Data";
 
 function Now() {
 
   const [errorMessage, setErrorMessage] = useState(null);
+  const [weatherData, setWeatherData] = useState(null);
+
 
   useEffect(() => {
     (async function () {
       try {
-        const weather = await getWeather();
-        const response = await weather.json();
+        const response = await getWeather();
+        const data = await response.json();
         console.log('response', response);
-        if (response.cod !== 200)
-          throw Error(response.message);
+        if (data.cod !== 200)
+          throw Error(data.message);
+
+        setWeatherData(data);
       } catch (error) {
         setErrorMessage(error.message);
       }
@@ -24,10 +28,10 @@ function Now() {
 
   return (
     <>
-      <TimeSelector id="now" />
+      <Data data={weatherData} />
       <Map />
       <ErrorModal message={errorMessage} handleClose={() => setErrorMessage(null)} />
-        </>
+    </>
   );
 }
 
