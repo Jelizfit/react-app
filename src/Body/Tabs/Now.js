@@ -15,7 +15,7 @@ function Now() {
       try {
         const response = await getWeather();
         const data = await response.json();
-        console.log('response', response);
+
         if (data.cod !== 200)
           throw Error(data.message);
 

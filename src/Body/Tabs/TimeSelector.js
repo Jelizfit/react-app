@@ -1,7 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import ToggleButton from 'react-bootstrap/ToggleButton';
-import Data from './Data';
+import { useState, useEffect, useCallback } from "react";
+import { ButtonGroup, ToggleButton } from "react-bootstrap"
+import Data from "./Data";
 import moment from "moment"
 
 
@@ -31,7 +30,7 @@ function TimeSelector({ data }) {
     const hours = [];
 
     getCurrentData((item, day, hour) => {
- if (!days.includes(day)) {
+      if (!days.includes(day)) {
         days.push(day)
       }
       if (!hours.includes(hour)) {
@@ -40,7 +39,7 @@ function TimeSelector({ data }) {
     });
 
     setDays(days);
-    setHours(hours);
+    setHours(hours.sort());
     setSelectedDay(days[0]);
     setSelectedHour(hours[0]);
     if (data) {
@@ -50,20 +49,34 @@ function TimeSelector({ data }) {
 
   const handleOnChangeDays = (event) => {
     setSelectedDay(event.currentTarget.value);
+
     getCurrentData((item, day, hour) => {
-      if (selectedDay === day && selectedHour === hour) {
-        setCurrentData(item);
+      if (event.currentTarger.value === days[0]) {
+        const firstActiveHour = hour.find
+          ((hour) => !checkDatePast(days[0], hour)
+          );
+        if (event.currentTarget.value === day && firstActiveHour === hour) {
+          setSelectedHour(firstActiveHour);
+          setCurrentData(item);
+        }
+      } else {
+        if (event.currentTarget.value === day && selectedHour === hour) {
+          setCurrentData(item);
+        }
       }
     });
-  }
+  };
   const handleOnChangeHours = (event) => {
     setSelectedHour(event.currentTarget.value);
     getCurrentData((item, day, hour) => {
-      if (selectedDay === day && selectedHour === hour) {
+      if (selectedDay === day && event.currentTarget.value === hour) {
         setCurrentData(item);
       }
     });
   };
+
+  const checkDatePast = () => moment.unix() >
+    moment(`${days} ${hours}`, 'DD HH:mm').unix();
 
   return (
     <>
@@ -94,12 +107,16 @@ function TimeSelector({ data }) {
             value={hour}
             checked={hour === selectedHour}
             onChange={handleOnChangeHours}
+            disabled={
+              checkDatePast(days[0], hour) &&
+              selectedDay === days[0]
+            }
           >
             {hour}
           </ToggleButton>
         ))}
       </ButtonGroup>
-      {/* <Data data={data} />; */}
+      <Data data={currentData} />;
     </>
   );
 }

@@ -11,7 +11,6 @@ function Forecast() {
       const response = await getForecast();
       const data = await response.json();
       setForecastData(data);
-      // console.log('response', response)
     })()
   }, []);
 
