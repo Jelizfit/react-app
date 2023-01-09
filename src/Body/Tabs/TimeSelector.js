@@ -52,9 +52,8 @@ function TimeSelector({ data }) {
 
     getCurrentData((item, day, hour) => {
       if (event.currentTarger.value === days[0]) {
-        const firstActiveHour = hour.find
-          ((hour) => !checkDatePast(days[0], hour)
-          );
+        const firstActiveHour = hours.find
+          ((hour) => !checkDatePast(days[0], hour));
         if (event.currentTarget.value === day && firstActiveHour === hour) {
           setSelectedHour(firstActiveHour);
           setCurrentData(item);
@@ -75,8 +74,8 @@ function TimeSelector({ data }) {
     });
   };
 
-  const checkDatePast = () => moment.unix() >
-    moment(`${days} ${hours}`, 'DD HH:mm').unix();
+  const checkDatePast = (day, hour) => moment().unix() >
+    moment(`${day} ${hour}`, 'DD HH:mm').unix();
 
   return (
     <>
