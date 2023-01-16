@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 function Forecast() {
   const [forecastData, setForecastData] = useState(null);
+  const [currentData, setCurrentData] = useState(null);
 
   useEffect(() => {
     (async function () {
@@ -17,8 +18,12 @@ function Forecast() {
   return (
     <>
     
-      <TimeSelector data={forecastData} />
-      <Map />
+      <TimeSelector 
+      currentData={currentData}
+      setCurrentData={setCurrentData} 
+      data={forecastData} 
+      />
+      <Map weatherData={currentData} />
     </>
   );
 }

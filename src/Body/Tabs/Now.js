@@ -4,10 +4,9 @@ import { getWeather } from "../../services/apiService";
 import ErrorModal from "../../ErrorModal";
 import Data from "./Data";
 
-function Now() {
+function Now({ weatherData, setWeatherData }) {
 
   const [errorMessage, setErrorMessage] = useState(null);
-  const [weatherData, setWeatherData] = useState(null);
 
 
   useEffect(() => {
@@ -24,7 +23,7 @@ function Now() {
         setErrorMessage(error.message);
       }
     })()
-  }, []);
+  }, [setWeatherData]);
 
   return (
     <>
