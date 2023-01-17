@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Button from "react-bootstrap/Button";
@@ -6,26 +5,22 @@ import "./body.scss"
 import SearchBar from "./SearchBar";
 import Forecast from "./Tabs/Forecast";
 import Now from "./Tabs/Now";
-
-
+import { useDispatch } from 'react-redux';
+import { setShowSearchBar } from '../services/stateService'
 
 
 function Body() {
-  const [showBar, setShowBar] = useState(false);
-  const [weatherData, setWeatherData] = useState(null);
-  const handleCloseBar = () => setShowBar(false);
-  const handleShowBar = () => setShowBar(true);
 
+  const dispatch = useDispatch();
+
+  const handleShowBar = () => dispatch(setShowSearchBar(true));
 
   return (
     <>
       <Button className="mb-4" variant="primary" onClick={handleShowBar}>
         Search
       </Button>
-      <SearchBar
-        setWeatherData={setWeatherData}
-        show={showBar}
-        handleClose={handleCloseBar} />
+      <SearchBar/>
       <Tabs
         defaultActiveKey="now"
         id="fill-tab-example"
@@ -33,7 +28,7 @@ function Body() {
         justify
       >
         <Tab eventKey="now" title="Now">
-          <Now weatherData={weatherData} setWeatherData={setWeatherData} />
+          <Now/>
         </Tab>
         <Tab eventKey="forecast" title="Forecast">
           <Forecast />

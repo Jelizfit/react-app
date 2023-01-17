@@ -1,9 +1,13 @@
-import { useState } from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { getWeather, defaultSearchParams } from '../services/apiService';
+import { useSelector, useDispatch } from 'react-redux'
+import { setSearchParams } from '../services/stateService';
+import { useState } from 'react'
 
-function SearchForm({ handleCloseBar, setWeatherData }) {
+function SearchForm({ handleCloseBar }) {
+    const [selectedCity, setSelectedCity] = useState(null)
+    const searchParams = useSelector((state) => state.searchParams);
+    const dispatch = useDispatch();
 
     const cities = [
         { label: 'Tallinn', lat: 59.4370, lon: 24.7536 },
@@ -11,6 +15,7 @@ function SearchForm({ handleCloseBar, setWeatherData }) {
         { label: 'Sillamäe', lat: 59.3970, lon: 27.7633 },
         { label: 'Kuressaare', lat: 58.2550, lon: 22.4919 },
     ];
+
     const units = [
         'standard',
         'metric',
@@ -26,17 +31,15 @@ function SearchForm({ handleCloseBar, setWeatherData }) {
         { code: 'zh_cn', label: 'Chonese Simplified' },
     ];
 
-    const [selectedCity, setSelectedCity] = useState(null);
-
     const handleCitySelect = (event) => {
-        const selectedCity = cities.find(
+        const selectedCityObject = cities.find(
             (city) => city.label === event.target.value
         );
-        setSelectedCity(selectedCity);
+        setSelectedCity(selectedCityObject);
     };
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
+
         const params = {
             lat: event.target.lat.value,
             lon: event.target.lon.value,
@@ -44,10 +47,8 @@ function SearchForm({ handleCloseBar, setWeatherData }) {
             lang: event.target.lang.value,
         };
 
-        const response = await getWeather(params);
-        const data = await response.json();
+        dispatch(setSearchParams({ ...params, city: selectedCity }));
 
-        setWeatherData(data);
         handleCloseBar();
     };
 
@@ -55,7 +56,7 @@ function SearchForm({ handleCloseBar, setWeatherData }) {
         <Form onSubmit={handleSubmit}>
             <Form.Group className="my-4">
                 <Form.Label>City</Form.Label>
-                <Form.Select name="city" defaultValue={cities[0]} onChange={handleCitySelect}>
+                <Form.Select name="city" defaultValue={searchParams.city} onChange={handleCitySelect}>
                     {cities.map((city, i) => (
                         <option key={city.label} value={city.label}>
                             {city.label}
@@ -65,22 +66,22 @@ function SearchForm({ handleCloseBar, setWeatherData }) {
             </Form.Group>
             <Form.Group className="mb-4">
                 <Form.Label>Latitude</Form.Label>
-                <Form.Control 
-                type="text" 
-                name="lat" 
-                placeholder="41.94395" 
-                value={selectedCity?.lat || defaultSearchParams.lat} 
-                onChange={() => {}}
+                <Form.Control
+                    type="text"
+                    name="lat"
+                    placeholder="41.94395"
+                    value={selectedCity?.lat || searchParams.lat}
+                    onChange={() => { }}
                 />
             </Form.Group>
             <Form.Group className="mb-4">
                 <Form.Label>Longetude</Form.Label>
-                <Form.Control 
-                type="text" 
-                name="lon" 
-                placeholder="2.12453" 
-                value={selectedCity?.lon || defaultSearchParams.lon}
-                onChange={() => {}} 
+                <Form.Control
+                    type="text"
+                    name="lon"
+                    placeholder="2.12453"
+                    value={selectedCity?.lon || searchParams.lon}
+                    onChange={() => { }}
                 />
             </Form.Group>
             <Form.Group>
@@ -93,13 +94,13 @@ function SearchForm({ handleCloseBar, setWeatherData }) {
                         key={unit}
                         name="units"
                         value={unit}
-                        defaultChecked={defaultSearchParams.units === unit}
+                        defaultChecked={searchParams.units === unit}
                     />
                 ))}
             </Form.Group>
             <Form.Group className="my-4">
                 <Form.Label>Language</Form.Label>
-                <Form.Select name="lang" defaultValue={defaultSearchParams.lang}>
+                <Form.Select name="lang" defaultValue={searchParams.lang}>
                     {languages.map((language, i) => (
                         <option key={language.code} value="{language.code">{language.label}</option>
                     ))}
