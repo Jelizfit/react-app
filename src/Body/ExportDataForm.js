@@ -11,14 +11,21 @@ function ExportDataForm() {
     const endpoints = ['Current', 'Forecast'];
 
 
+    // Обработчик ивента - это просто функция, которая принимает как аргумент объект события.ю 
+    // и принято называть обработчики со словом 'handle'
+    // В event объект передается элемент, с которым произошло событие,
+    // хранится оно в свойстве 'target'
     const handleSubmit = (event) => {
+        // preventDefault - это функция, которая отключает действие дефолтное/по умолчанию данного события
+        // пример: действие у onSubmit по умолчанию - отправка данных на сервер через get метод.
+        
         event.preventDefault();
 
         const mode = event.target.mode.value;
         const endpoint = event.target.endpoint.value;
 
         if (!endpoint) {
-            alert('Please choose endpoint')
+            dispatch(setErrorMessage('Please choose endpoint'));
             return;
         }
 
@@ -42,6 +49,14 @@ function ExportDataForm() {
                 dispatch(setErrorMessage(error.message));
             });
     };
+
+    // onSubmit - это слушатель события и триггер обработчика события.
+    // Все, что делает пользователь на нашем сайте, все является событиями. 
+    // Пользователь что-то сделал, а браузер передал это нашему проекту. 
+    // В нашем проекте слушатели запускают обработчики событий.
+    // Браузер передает нам объект с данными данного события. (event)
+    // Есть огромное кол-во слушателей и все названия начинаются со слова 'on'
+
     return (
         <>
             <Form onSubmit={handleSubmit} className="mt-4">
