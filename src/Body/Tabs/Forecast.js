@@ -2,20 +2,30 @@ import TimeSelector from "./TimeSelector";
 import Map from "./Map";
 import { getForecast } from "../../services/apiService";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Data from "./Data";
+import { setErrorMessage } from "../../services/stateService";
 
 function Forecast() {
   const [forecastData, setForecastData] = useState(null);
   const searchParams = useSelector((state) => state.searchParams);
   const forecastSelectedData = useSelector((state) => state.forecastSelectedData);
+  const dispatch = useDispatch();
   useEffect(() => {
     (async function () {
-      const response = await getForecast();
+      try {
+        const response = await getForecast();
       const data = await response.json();
-      setForecastData(data);
+
+      if (+data.cod !== 200) throw Error(data.message);
+
+      setForecastData(data); 
+      } catch(error) {
+        dispatch(setErrorMessage(error.message))
+      }
+     
     })()
-  }, [searchParams]);
+  }, [dispatch, searchParams]);
 
   const weatherData = forecastData ? {
     ...forecastData?.list[0],

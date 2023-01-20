@@ -10,20 +10,26 @@ const initialState = {
         city: 'Tallinn',
     },
     forecastSelectedData: null,
+    errorMessage: null,
 };
 
 export const setSearchParams = createAction('setSearchParams');
 export const setShowSearchBar = createAction('setShowBar');
 export const setForecastSelectedData = createAction('setForecastSelectedData')
+export const setErrorMessage = createAction('setErrorMessage')
+
 const reducer = createReducer(initialState, {
     [setSearchParams]: (iState, action ) => {
-      iState.showSearchParams = action.payload;  
+      iState.searchParams = action.payload;  
     },
     [setShowSearchBar]: (iState, action ) => {
-        iState.searchParams = action.payload;  
+        iState.showSearchBarParams = action.payload;  
     },
     [setForecastSelectedData]: (iState, action ) => {
-        iState.searchParams = action.payload;  
+        iState.forecastSelectedData = action.payload;  
+    },
+    [setErrorMessage]: (iState, action ) => {
+        iState.errorMessage = action.payload;  
     },
 });
 
