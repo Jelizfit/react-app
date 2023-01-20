@@ -23,7 +23,7 @@ const reducer = createReducer(initialState, {
       iState.searchParams = action.payload;  
     },
     [setShowSearchBar]: (iState, action ) => {
-        iState.showSearchBarParams = action.payload;  
+        iState.showSearchBar = action.payload;  
     },
     [setForecastSelectedData]: (iState, action ) => {
         iState.forecastSelectedData = action.payload;  
