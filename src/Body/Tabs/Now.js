@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import Map from "./Map";
-import { getWeather } from "../../services/apiService";
 import Data from "./Data";
-import { useSelector } from "react-redux";
+import { getWeather } from "../../services/apiService";
+import { useSelector, useDispatch } from "react-redux";
 import { setErrorMessage } from '../../services/stateService';
-import { useDispatch } from "react-redux";
 
 function Now() {
   const dispatch = useDispatch();
@@ -30,7 +29,7 @@ function Now() {
   return (
     <>
       <Data data={weatherData} />
-      <Map />
+      <Map weatherData={weatherData}/>
       
     </>
   );

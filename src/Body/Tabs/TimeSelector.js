@@ -24,8 +24,6 @@ function TimeSelector({ data }) {
         data={data}
         getCurrentData={getCurrentData}
       />
-
-    
     </>
   );
 }

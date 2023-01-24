@@ -18,7 +18,7 @@ function ExportDataForm() {
         const endpoint = event.target.endpoint.value;
 
         if (!endpoint) {
-            alert('Please choose endpoint')
+            dispatch(setErrorMessage('Please choose endpoint'));
             return;
         }
 

@@ -65,7 +65,6 @@ function DaySelector({
             </ButtonGroup>
             <HourSelector
                 hours={hours}
-                selectedDay={selectedDay}
             />
         </>
     );

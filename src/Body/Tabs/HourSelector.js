@@ -17,7 +17,7 @@ function HourSelector({ hours }) {
 
     const handleOnChangeHours = (hour, item) => {
         setSelectedHour(hour);
-        dispatch(setForecastSelectedData)
+        dispatch(setForecastSelectedData(item))
     };
 
     return (

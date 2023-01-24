@@ -23,7 +23,7 @@ function Body() {
       <SearchBar/>
       <Tabs
         defaultActiveKey="now"
-        id="fill-tab-example"
+        id="justify-tab-example"
         className="mb-3"
         justify
       >

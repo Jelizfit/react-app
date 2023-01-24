@@ -1,9 +1,9 @@
 import TimeSelector from "./TimeSelector";
 import Map from "./Map";
+import Data from "./Data";
 import { getForecast } from "../../services/apiService";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Data from "./Data";
 import { setErrorMessage } from "../../services/stateService";
 
 function Forecast() {
@@ -14,7 +14,7 @@ function Forecast() {
   useEffect(() => {
     (async function () {
       try {
-        const response = await getForecast();
+        const response = await getForecast(searchParams);
       const data = await response.json();
 
       if (+data.cod !== 200) throw Error(data.message);
