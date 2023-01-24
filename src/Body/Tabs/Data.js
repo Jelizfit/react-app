@@ -1,6 +1,14 @@
 import Table from "react-bootstrap/Table";
 
 function Data({ data }) {
+
+    const roundTemp = (temp) => {
+        if(temp) {
+            return 0 < temp ?Math.ceil(temp) : Math.floor(temp);
+        }
+        return temp;
+    };
+
     return (
         <Table striped bordered hover>
             <tbody>
@@ -11,10 +19,10 @@ function Data({ data }) {
                 </tr>
                 <tr>
                     <td><b>Main</b></td>
-                    <td>{data?.main.feels_like}</td>
-                    <td>{data?.main.temp}</td>
-                    <td>{data?.main.temp_min}</td>
-                    <td>{data?.main.temp_max}</td>
+                    <td>{roundTemp(data?.main.feels_like)}</td>
+                    <td>{roundTemp(data?.main.temp)}</td>
+                    <td>{roundTemp(data?.main.temp_min)}</td>
+                    <td>{roundTemp(data?.main.temp_max)}</td>
                 </tr>
                 <tr>
                     <td><b>Wind</b></td>
