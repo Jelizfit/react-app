@@ -4,7 +4,7 @@ import { defaultSearchParams } from "../../services/apiService"
 function Map({ weatherData }) {
     const { isLoaded } = useJsApiLoader({
         id: "google-map-script",
-        googleMapApiKey: process.env.REACT_APP_GOOGLE_API_KEY
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY
     });
 
     const center = {
